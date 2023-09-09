@@ -31,7 +31,7 @@ let client = BlipsClient::new(&session_cookie, &csrf_token);
 
 ## Usage
 
-Once you've constructed a `BlipsClient` you can
+Once you've constructed a `BlipsClient` you can make requests to the Blips API using the methods on the client:
 
 ```rs
 let me = client
