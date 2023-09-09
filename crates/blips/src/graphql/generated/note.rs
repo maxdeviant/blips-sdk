@@ -15,8 +15,8 @@ pub mod note {
     type Int = i64;
     #[allow(dead_code)]
     type ID = String;
-    type Date = crate::graphql::custom_scalars::Date;
     type DateTime = crate::graphql::custom_scalars::DateTime;
+    type Date = crate::graphql::custom_scalars::Date;
     #[derive(Serialize)]
     pub struct Variables {
         pub note_id: ID,
