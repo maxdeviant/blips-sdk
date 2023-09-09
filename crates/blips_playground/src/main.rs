@@ -23,7 +23,7 @@ async fn main() -> Result<()> {
 
     let tasks = client
         .tasks(blips::graphql::tasks::Variables {
-            completed: None,
+            completed: Some(true),
             focus: None,
             inbox: None,
             date: None,
