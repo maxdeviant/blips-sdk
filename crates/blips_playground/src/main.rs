@@ -1,6 +1,6 @@
 use std::env;
 
-use anyhow::Result;
+use anyhow::{anyhow, Result};
 use blips::{BlipsClient, CsrfToken, SessionCookie};
 use dotenv::dotenv;
 
@@ -13,9 +13,32 @@ async fn main() -> Result<()> {
 
     let client = BlipsClient::new(&session_cookie, &csrf_token);
 
-    let response = client.me(blips::graphql::me::Variables {}).await?;
+    let me = client
+        .me(blips::graphql::me::Variables {})
+        .await?
+        .me
+        .ok_or_else(|| anyhow!("Failed to execute `me`"))?;
 
-    println!("{:?}", response.me);
+    println!("Signed in as {}", me.email);
+
+    let tasks = client
+        .tasks(blips::graphql::tasks::Variables {
+            completed: None,
+            focus: None,
+            inbox: None,
+            date: None,
+            due_date: None,
+            project_id: None,
+        })
+        .await?
+        .tasks
+        .ok_or_else(|| anyhow!("Failed to retrieve tasks"))?;
+
+    println!("You have {} task(s):", tasks.len());
+
+    for task in tasks {
+        println!("[{}] {}", if task.completed { "x" } else { " " }, task.name);
+    }
 
     Ok(())
 }
