@@ -1,10 +1,10 @@
 #![allow(clippy::all, warnings)]
-pub struct Project;
-pub mod project {
+pub struct UpdateProject;
+pub mod update_project {
     #![allow(dead_code)]
     use std::result::Result;
-    pub const OPERATION_NAME: &str = "Project";
-    pub const QUERY : & str = "query Project($project_id: ID!) {\n    project(projectId: $project_id) {\n        ...Project\n    }\n}\n\nfragment Project on Project {\n    __typename\n    collapseCompleted\n    completed\n    completedAt\n    date\n    endDate\n    id\n    link\n    name\n    noteBody\n    order\n    springEnabled\n    supportsNotes\n}" ;
+    pub const OPERATION_NAME: &str = "UpdateProject";
+    pub const QUERY : & str = "mutation UpdateProject($board_id: ID, $date: Date, $end_date: Date, $name: String, $project_id: ID!) {\n    updateProject(boardId: $board_id, date: $date, endDate: $end_date, name: $name, projectId: $project_id) {\n        ...Project\n    }\n}\n\nfragment Project on Project {\n    __typename\n    collapseCompleted\n    completed\n    completedAt\n    date\n    endDate\n    id\n    link\n    name\n    noteBody\n    order\n    springEnabled\n    supportsNotes\n}" ;
     use super::*;
     use serde::{Deserialize, Serialize};
     #[allow(dead_code)]
@@ -15,10 +15,14 @@ pub mod project {
     type Int = i64;
     #[allow(dead_code)]
     type ID = String;
-    type DateTime = crate::graphql::custom_scalars::DateTime;
     type Date = crate::graphql::custom_scalars::Date;
+    type DateTime = crate::graphql::custom_scalars::DateTime;
     #[derive(Serialize)]
     pub struct Variables {
+        pub board_id: Option<ID>,
+        pub date: Option<Date>,
+        pub end_date: Option<Date>,
+        pub name: Option<String>,
         pub project_id: ID,
     }
     impl Variables {}
@@ -45,18 +49,19 @@ pub mod project {
     }
     #[derive(Deserialize, Debug)]
     pub struct ResponseData {
-        pub project: Option<ProjectProject>,
+        #[serde(rename = "updateProject")]
+        pub update_project: UpdateProjectUpdateProject,
     }
-    pub type ProjectProject = Project;
+    pub type UpdateProjectUpdateProject = Project;
 }
-impl graphql_client::GraphQLQuery for Project {
-    type Variables = project::Variables;
-    type ResponseData = project::ResponseData;
+impl graphql_client::GraphQLQuery for UpdateProject {
+    type Variables = update_project::Variables;
+    type ResponseData = update_project::ResponseData;
     fn build_query(variables: Self::Variables) -> ::graphql_client::QueryBody<Self::Variables> {
         graphql_client::QueryBody {
             variables,
-            query: project::QUERY,
-            operation_name: project::OPERATION_NAME,
+            query: update_project::QUERY,
+            operation_name: update_project::OPERATION_NAME,
         }
     }
 }

@@ -1,0 +1,10 @@
+mutation UpdateNote($body: String, $date: Date, $end_date: Date, $hide_preview: Boolean, $last_updated_at: DateTime, $name: String, $note_id: ID!, $project_id: ID) {
+    updateNote(body: $body, date: $date, endDate: $end_date, hidePreview: $hide_preview, lastUpdatedAt: $last_updated_at, name: $name, noteId: $note_id, projectId: $project_id) {
+        ...UpdateNoteResult
+    }
+}
+
+fragment UpdateNoteResult on UpdateNoteResult {
+    __typename
+    
+}

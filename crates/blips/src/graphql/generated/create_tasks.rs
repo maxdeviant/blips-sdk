@@ -1,10 +1,10 @@
 #![allow(clippy::all, warnings)]
-pub struct Tasks;
-pub mod tasks {
+pub struct CreateTasks;
+pub mod create_tasks {
     #![allow(dead_code)]
     use std::result::Result;
-    pub const OPERATION_NAME: &str = "Tasks";
-    pub const QUERY : & str = "query Tasks($completed: Boolean, $date: Date, $due_date: Date, $focus: Boolean, $inbox: Boolean, $project_id: ID) {\n    tasks(completed: $completed, date: $date, dueDate: $due_date, focus: $focus, inbox: $inbox, projectId: $project_id) {\n        ...Task\n    }\n}\n\nfragment Task on Task {\n    __typename\n    completed\n    completedAt\n    date\n    description\n    dueDate\n    groupIds\n    id\n    isRecurring\n    link\n    name\n    priorityOrder\n    spring\n}" ;
+    pub const OPERATION_NAME: &str = "CreateTasks";
+    pub const QUERY : & str = "mutation CreateTasks($after: ID, $date: Date, $group_id: ID, $link: String, $due_date: Date, $names: [String!]!, $prioritized: Boolean, $project_id: ID, $tag_slug: String) {\n    createTasks(after: $after, date: $date, groupId: $group_id, link: $link, dueDate: $due_date, names: $names, prioritized: $prioritized, projectId: $project_id, tagSlug: $tag_slug) {\n        ...Task\n    }\n}\n\nfragment Task on Task {\n    __typename\n    completed\n    completedAt\n    date\n    description\n    dueDate\n    groupIds\n    id\n    isRecurring\n    link\n    name\n    priorityOrder\n    spring\n}" ;
     use super::*;
     use serde::{Deserialize, Serialize};
     #[allow(dead_code)]
@@ -15,16 +15,19 @@ pub mod tasks {
     type Int = i64;
     #[allow(dead_code)]
     type ID = String;
-    type Date = crate::graphql::custom_scalars::Date;
     type DateTime = crate::graphql::custom_scalars::DateTime;
+    type Date = crate::graphql::custom_scalars::Date;
     #[derive(Serialize)]
     pub struct Variables {
-        pub completed: Option<Boolean>,
+        pub after: Option<ID>,
         pub date: Option<Date>,
+        pub group_id: Option<ID>,
+        pub link: Option<String>,
         pub due_date: Option<Date>,
-        pub focus: Option<Boolean>,
-        pub inbox: Option<Boolean>,
+        pub names: Vec<String>,
+        pub prioritized: Option<Boolean>,
         pub project_id: Option<ID>,
+        pub tag_slug: Option<String>,
     }
     impl Variables {}
     #[derive(Deserialize, Debug)]
@@ -49,18 +52,19 @@ pub mod tasks {
     }
     #[derive(Deserialize, Debug)]
     pub struct ResponseData {
-        pub tasks: Option<Vec<TasksTasks>>,
+        #[serde(rename = "createTasks")]
+        pub create_tasks: Vec<CreateTasksCreateTasks>,
     }
-    pub type TasksTasks = Task;
+    pub type CreateTasksCreateTasks = Task;
 }
-impl graphql_client::GraphQLQuery for Tasks {
-    type Variables = tasks::Variables;
-    type ResponseData = tasks::ResponseData;
+impl graphql_client::GraphQLQuery for CreateTasks {
+    type Variables = create_tasks::Variables;
+    type ResponseData = create_tasks::ResponseData;
     fn build_query(variables: Self::Variables) -> ::graphql_client::QueryBody<Self::Variables> {
         graphql_client::QueryBody {
             variables,
-            query: tasks::QUERY,
-            operation_name: tasks::OPERATION_NAME,
+            query: create_tasks::QUERY,
+            operation_name: create_tasks::OPERATION_NAME,
         }
     }
 }

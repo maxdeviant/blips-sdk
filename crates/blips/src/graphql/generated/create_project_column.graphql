@@ -1,0 +1,13 @@
+mutation CreateProjectColumn($board_id: ID!, $name: String!) {
+    createProjectColumn(boardId: $board_id, name: $name) {
+        ...ProjectColumn
+    }
+}
+
+fragment ProjectColumn on ProjectColumn {
+    __typename
+    collapsed
+    id
+    name
+    order
+}

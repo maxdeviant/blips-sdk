@@ -1,0 +1,10 @@
+mutation GenerateNewOtp {
+    generateNewOtp {
+        ...GenerateNewOtpResult
+    }
+}
+
+fragment GenerateNewOtpResult on GenerateNewOtpResult {
+    __typename
+    
+}

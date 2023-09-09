@@ -1,0 +1,16 @@
+mutation CreateNote($date: Date, $name: String, $project_id: ID) {
+    createNote(date: $date, name: $name, projectId: $project_id) {
+        ...Note
+    }
+}
+
+fragment Note on Note {
+    __typename
+    body
+    date
+    endDate
+    hidePreview
+    id
+    name
+    updatedAt
+}

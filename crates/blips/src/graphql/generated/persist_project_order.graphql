@@ -1,0 +1,13 @@
+mutation PersistProjectOrder($order: [OrderInput!]) {
+    persistProjectOrder(order: $order) {
+        ...ProjectColumn
+    }
+}
+
+fragment ProjectColumn on ProjectColumn {
+    __typename
+    collapsed
+    id
+    name
+    order
+}

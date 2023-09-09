@@ -1,0 +1,16 @@
+mutation DeleteGroup($delete_tasks: Boolean, $group_id: ID!) {
+    deleteGroup(deleteTasks: $delete_tasks, groupId: $group_id) {
+        ...Group
+    }
+}
+
+fragment Group on Group {
+    __typename
+    collapsed
+    date
+    id
+    keepTasks
+    name
+    order
+    projectId
+}

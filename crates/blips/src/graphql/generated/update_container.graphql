@@ -1,0 +1,10 @@
+mutation UpdateContainer($collapse_completed: Boolean, $date: Date, $note_body: String, $project_id: ID, $state: DiaryStateEnum) {
+    updateContainer(collapseCompleted: $collapse_completed, date: $date, noteBody: $note_body, projectId: $project_id, state: $state) {
+        ...Container
+    }
+}
+
+fragment Container on Container {
+    __typename
+    
+}

@@ -1,0 +1,21 @@
+mutation UpdateTask($date: Date, $description: String, $due_date: Date, $link: String, $name: String, $project_id: ID, $recurrence: RecurrenceInput, $task_id: ID!) {
+    updateTask(date: $date, description: $description, dueDate: $due_date, link: $link, name: $name, projectId: $project_id, recurrence: $recurrence, taskId: $task_id) {
+        ...Task
+    }
+}
+
+fragment Task on Task {
+    __typename
+    completed
+    completedAt
+    date
+    description
+    dueDate
+    groupIds
+    id
+    isRecurring
+    link
+    name
+    priorityOrder
+    spring
+}

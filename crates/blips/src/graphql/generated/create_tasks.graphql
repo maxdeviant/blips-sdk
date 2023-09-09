@@ -1,0 +1,21 @@
+mutation CreateTasks($after: ID, $date: Date, $group_id: ID, $link: String, $due_date: Date, $names: [String!]!, $prioritized: Boolean, $project_id: ID, $tag_slug: String) {
+    createTasks(after: $after, date: $date, groupId: $group_id, link: $link, dueDate: $due_date, names: $names, prioritized: $prioritized, projectId: $project_id, tagSlug: $tag_slug) {
+        ...Task
+    }
+}
+
+fragment Task on Task {
+    __typename
+    completed
+    completedAt
+    date
+    description
+    dueDate
+    groupIds
+    id
+    isRecurring
+    link
+    name
+    priorityOrder
+    spring
+}

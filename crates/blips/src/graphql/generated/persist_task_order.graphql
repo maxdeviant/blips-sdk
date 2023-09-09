@@ -1,0 +1,21 @@
+mutation PersistTaskOrder($task_order: [OrderInput!]) {
+    persistTaskOrder(taskOrder: $task_order) {
+        ...Task
+    }
+}
+
+fragment Task on Task {
+    __typename
+    completed
+    completedAt
+    date
+    description
+    dueDate
+    groupIds
+    id
+    isRecurring
+    link
+    name
+    priorityOrder
+    spring
+}

@@ -1,0 +1,21 @@
+mutation PrioritizeTasks($ids: [ID!]!) {
+    prioritizeTasks(ids: $ids) {
+        ...Task
+    }
+}
+
+fragment Task on Task {
+    __typename
+    completed
+    completedAt
+    date
+    description
+    dueDate
+    groupIds
+    id
+    isRecurring
+    link
+    name
+    priorityOrder
+    spring
+}

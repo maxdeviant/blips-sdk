@@ -1,0 +1,12 @@
+mutation UpdateUserSettings($badge_count_mode: BadgeCountModeEnum) {
+    updateUserSettings(badgeCountMode: $badge_count_mode) {
+        ...User
+    }
+}
+
+fragment User on User {
+    __typename
+    email
+    id
+    isMfaEnabled
+}

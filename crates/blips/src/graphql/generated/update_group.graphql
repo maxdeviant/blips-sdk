@@ -1,0 +1,16 @@
+mutation UpdateGroup($collapsed: Boolean, $date: Date, $group_id: ID!, $keep_tasks: Boolean, $name: String) {
+    updateGroup(collapsed: $collapsed, date: $date, groupId: $group_id, keepTasks: $keep_tasks, name: $name) {
+        ...Group
+    }
+}
+
+fragment Group on Group {
+    __typename
+    collapsed
+    date
+    id
+    keepTasks
+    name
+    order
+    projectId
+}

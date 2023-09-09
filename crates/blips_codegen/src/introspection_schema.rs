@@ -46,7 +46,7 @@ pub enum GraphQlFullType {
     Scalar(GraphQlScalarType),
     Object(GraphQlObjectType),
     Interface(GraphQlInterfaceType),
-    Union,
+    Union(GraphQlUnionType),
     Enum(GraphQlEnumType),
     InputObject(GraphQlInputObjectType),
 }
@@ -57,7 +57,7 @@ impl GraphQlFullType {
             Self::Scalar(scalar) => Some(scalar.name.clone()),
             Self::Object(object) => Some(object.name.clone()),
             Self::Interface(interface) => Some(interface.name.clone()),
-            Self::Union => None,
+            Self::Union(union) => Some(union.name.clone()),
             Self::Enum(r#enum) => Some(r#enum.name.clone()),
             Self::InputObject(input_object) => Some(input_object.name.clone()),
         }
@@ -78,6 +78,12 @@ pub struct GraphQlObjectType {
     pub description: Option<String>,
     pub fields: Vec<Field>,
     pub of_type: Option<GraphQlTypeRef>,
+}
+
+#[derive(Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct GraphQlUnionType {
+    pub name: String,
 }
 
 #[derive(Debug, Deserialize)]

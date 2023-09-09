@@ -73,6 +73,45 @@ impl TryFrom<&IntrospectionSchema> for QueryType {
     }
 }
 
+#[derive(Debug)]
+struct MutationType {
+    fields: Vec<Field>,
+}
+
+impl MutationType {
+    pub fn from_schema(schema: &IntrospectionSchema) -> Result<Option<Self>, &'static str> {
+        let mutation_type = match &schema.mutation_type {
+            Some(mutation_type) => mutation_type,
+            None => return Ok(None),
+        };
+
+        let mutation_name = &mutation_type.name;
+
+        let mutation_type = schema
+            .types
+            .iter()
+            .find_map(|ty| match ty {
+                GraphQlFullType::Object(object) if &object.name == mutation_name => Some(object),
+                _ => None,
+            })
+            .ok_or("No Mutation type found")?;
+
+        Ok(Some(MutationType {
+            fields: mutation_type.fields.to_vec(),
+        }))
+    }
+
+    pub fn fields(&self) -> &[Field] {
+        &self.fields
+    }
+}
+
+#[derive(Debug, PartialEq, Eq, PartialOrd, Ord, Clone, Copy)]
+enum GraphQlOperation {
+    Query,
+    Mutation,
+}
+
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     let schema_file = File::open("schema.json")?;
     let buf_reader = BufReader::new(schema_file);
@@ -82,11 +121,29 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let schema = schema_query.data.schema;
 
     let query = QueryType::try_from(&schema)?;
+    let mutation = MutationType::from_schema(&schema)?;
 
     let mut emitted_graphql_modules: Vec<String> = Vec::new();
     let mut generated_client_impls: Vec<String> = Vec::new();
 
-    for field in query.fields() {
+    let mut fields = Vec::new();
+    fields.extend(
+        query
+            .fields()
+            .iter()
+            .map(|field| (GraphQlOperation::Query, field)),
+    );
+
+    if let Some(mutation) = &mutation {
+        fields.extend(
+            mutation
+                .fields()
+                .iter()
+                .map(|field| (GraphQlOperation::Mutation, field)),
+        );
+    }
+
+    for (operation, field) in fields {
         let field_type_name = resolve_type_name(&field.ty);
 
         let has_args = !field.args.is_empty();
@@ -137,7 +194,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
         let contents = format!(
             r#"
-query {query_name}{args_list} {{
+{operation} {query_name}{args_list} {{
     {field_name}{applied_args_list} {{
         ...{fragment_name}
     }}
@@ -148,6 +205,10 @@ fragment {fragment_name} on {fragment_name} {{
     {fragment_fields}
 }}
             "#,
+            operation = match operation {
+                GraphQlOperation::Query => "query",
+                GraphQlOperation::Mutation => "mutation",
+            },
             query_name = sanitize_name(field.name.clone()).to_pascal_case(),
             args_list = if has_args {
                 format!("({})", args_list)

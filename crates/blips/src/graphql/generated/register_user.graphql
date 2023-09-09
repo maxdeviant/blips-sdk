@@ -1,0 +1,10 @@
+mutation RegisterUser($email: String!, $password: String!, $secret_code: String!) {
+    registerUser(email: $email, password: $password, secretCode: $secret_code) {
+        ...LoginResponse
+    }
+}
+
+fragment LoginResponse on LoginResponse {
+    __typename
+    accessToken
+}

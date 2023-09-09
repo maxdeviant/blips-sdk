@@ -1,0 +1,14 @@
+mutation UpdateDiary($date: Date!, $note_body: String!) {
+    updateDiary(date: $date, noteBody: $note_body) {
+        ...Diary
+    }
+}
+
+fragment Diary on Diary {
+    __typename
+    collapseCompleted
+    date
+    id
+    noteBody
+    supportsNotes
+}

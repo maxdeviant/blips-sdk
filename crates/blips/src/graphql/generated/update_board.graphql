@@ -1,0 +1,16 @@
+mutation UpdateBoard($emoji: String, $name: String, $board_id: ID!, $project_completed_project_column_id: ID, $task_completed_project_column_id: ID) {
+    updateBoard(emoji: $emoji, name: $name, boardId: $board_id, projectCompletedProjectColumnId: $project_completed_project_column_id, taskCompletedProjectColumnId: $task_completed_project_column_id) {
+        ...Board
+    }
+}
+
+fragment Board on Board {
+    __typename
+    archivedAt
+    emoji
+    id
+    lastViewedAt
+    name
+    projectCompletedProjectColumnId
+    taskCompletedProjectColumnId
+}

@@ -1,0 +1,21 @@
+mutation UpdateProject($board_id: ID, $date: Date, $end_date: Date, $name: String, $project_id: ID!) {
+    updateProject(boardId: $board_id, date: $date, endDate: $end_date, name: $name, projectId: $project_id) {
+        ...Project
+    }
+}
+
+fragment Project on Project {
+    __typename
+    collapseCompleted
+    completed
+    completedAt
+    date
+    endDate
+    id
+    link
+    name
+    noteBody
+    order
+    springEnabled
+    supportsNotes
+}

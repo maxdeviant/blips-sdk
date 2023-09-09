@@ -1,0 +1,16 @@
+mutation DeleteBoard($board_id: ID!) {
+    deleteBoard(boardId: $board_id) {
+        ...Board
+    }
+}
+
+fragment Board on Board {
+    __typename
+    archivedAt
+    emoji
+    id
+    lastViewedAt
+    name
+    projectCompletedProjectColumnId
+    taskCompletedProjectColumnId
+}

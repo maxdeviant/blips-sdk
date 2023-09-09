@@ -1,0 +1,16 @@
+mutation CreateGroups($container_id: ID!, $container_type: ContainerTypeEnum!, $names: [String!]!) {
+    createGroups(containerId: $container_id, containerType: $container_type, names: $names) {
+        ...Group
+    }
+}
+
+fragment Group on Group {
+    __typename
+    collapsed
+    date
+    id
+    keepTasks
+    name
+    order
+    projectId
+}

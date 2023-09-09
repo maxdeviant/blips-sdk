@@ -1,0 +1,21 @@
+mutation CreateProject($board_id: ID, $name: String, $project_column_id: ID, $source_task_id: ID) {
+    createProject(boardId: $board_id, name: $name, projectColumnId: $project_column_id, sourceTaskId: $source_task_id) {
+        ...Project
+    }
+}
+
+fragment Project on Project {
+    __typename
+    collapseCompleted
+    completed
+    completedAt
+    date
+    endDate
+    id
+    link
+    name
+    noteBody
+    order
+    springEnabled
+    supportsNotes
+}

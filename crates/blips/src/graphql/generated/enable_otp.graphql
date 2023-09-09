@@ -1,0 +1,10 @@
+mutation EnableOtp($otp_attempt: String!, $otp_secret: String!) {
+    enableOtp(otpAttempt: $otp_attempt, otpSecret: $otp_secret) {
+        ...EnableOtpResult
+    }
+}
+
+fragment EnableOtpResult on EnableOtpResult {
+    __typename
+    
+}

@@ -1,0 +1,16 @@
+mutation CreateBoards($names: [String!]!) {
+    createBoards(names: $names) {
+        ...Board
+    }
+}
+
+fragment Board on Board {
+    __typename
+    archivedAt
+    emoji
+    id
+    lastViewedAt
+    name
+    projectCompletedProjectColumnId
+    taskCompletedProjectColumnId
+}

@@ -1,0 +1,13 @@
+mutation UpdateProjectColumn($collapsed: Boolean, $name: String, $project_column_id: ID!) {
+    updateProjectColumn(collapsed: $collapsed, name: $name, projectColumnId: $project_column_id) {
+        ...ProjectColumn
+    }
+}
+
+fragment ProjectColumn on ProjectColumn {
+    __typename
+    collapsed
+    id
+    name
+    order
+}

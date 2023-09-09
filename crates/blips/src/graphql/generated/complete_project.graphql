@@ -1,0 +1,21 @@
+mutation CompleteProject($project_id: ID!) {
+    completeProject(projectId: $project_id) {
+        ...Project
+    }
+}
+
+fragment Project on Project {
+    __typename
+    collapseCompleted
+    completed
+    completedAt
+    date
+    endDate
+    id
+    link
+    name
+    noteBody
+    order
+    springEnabled
+    supportsNotes
+}

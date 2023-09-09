@@ -1,0 +1,16 @@
+mutation PersistGroupOrder($order: [OrderInput!]) {
+    persistGroupOrder(order: $order) {
+        ...Group
+    }
+}
+
+fragment Group on Group {
+    __typename
+    collapsed
+    date
+    id
+    keepTasks
+    name
+    order
+    projectId
+}

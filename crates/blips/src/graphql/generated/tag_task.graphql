@@ -1,0 +1,21 @@
+mutation TagTask($tag_id: ID!, $task_id: ID!) {
+    tagTask(tagId: $tag_id, taskId: $task_id) {
+        ...Task
+    }
+}
+
+fragment Task on Task {
+    __typename
+    completed
+    completedAt
+    date
+    description
+    dueDate
+    groupIds
+    id
+    isRecurring
+    link
+    name
+    priorityOrder
+    spring
+}

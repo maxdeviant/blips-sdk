@@ -1,10 +1,10 @@
 #![allow(clippy::all, warnings)]
-pub struct Project;
-pub mod project {
+pub struct CompleteProject;
+pub mod complete_project {
     #![allow(dead_code)]
     use std::result::Result;
-    pub const OPERATION_NAME: &str = "Project";
-    pub const QUERY : & str = "query Project($project_id: ID!) {\n    project(projectId: $project_id) {\n        ...Project\n    }\n}\n\nfragment Project on Project {\n    __typename\n    collapseCompleted\n    completed\n    completedAt\n    date\n    endDate\n    id\n    link\n    name\n    noteBody\n    order\n    springEnabled\n    supportsNotes\n}" ;
+    pub const OPERATION_NAME: &str = "CompleteProject";
+    pub const QUERY : & str = "mutation CompleteProject($project_id: ID!) {\n    completeProject(projectId: $project_id) {\n        ...Project\n    }\n}\n\nfragment Project on Project {\n    __typename\n    collapseCompleted\n    completed\n    completedAt\n    date\n    endDate\n    id\n    link\n    name\n    noteBody\n    order\n    springEnabled\n    supportsNotes\n}" ;
     use super::*;
     use serde::{Deserialize, Serialize};
     #[allow(dead_code)]
@@ -45,18 +45,19 @@ pub mod project {
     }
     #[derive(Deserialize, Debug)]
     pub struct ResponseData {
-        pub project: Option<ProjectProject>,
+        #[serde(rename = "completeProject")]
+        pub complete_project: CompleteProjectCompleteProject,
     }
-    pub type ProjectProject = Project;
+    pub type CompleteProjectCompleteProject = Project;
 }
-impl graphql_client::GraphQLQuery for Project {
-    type Variables = project::Variables;
-    type ResponseData = project::ResponseData;
+impl graphql_client::GraphQLQuery for CompleteProject {
+    type Variables = complete_project::Variables;
+    type ResponseData = complete_project::ResponseData;
     fn build_query(variables: Self::Variables) -> ::graphql_client::QueryBody<Self::Variables> {
         graphql_client::QueryBody {
             variables,
-            query: project::QUERY,
-            operation_name: project::OPERATION_NAME,
+            query: complete_project::QUERY,
+            operation_name: complete_project::OPERATION_NAME,
         }
     }
 }

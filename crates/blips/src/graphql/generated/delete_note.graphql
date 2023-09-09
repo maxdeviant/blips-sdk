@@ -1,0 +1,16 @@
+mutation DeleteNote($note_id: ID!) {
+    deleteNote(noteId: $note_id) {
+        ...Note
+    }
+}
+
+fragment Note on Note {
+    __typename
+    body
+    date
+    endDate
+    hidePreview
+    id
+    name
+    updatedAt
+}

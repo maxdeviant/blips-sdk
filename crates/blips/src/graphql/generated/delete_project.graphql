@@ -1,0 +1,21 @@
+mutation DeleteProject($delete_tasks: Boolean, $project_id: ID!) {
+    deleteProject(deleteTasks: $delete_tasks, projectId: $project_id) {
+        ...Project
+    }
+}
+
+fragment Project on Project {
+    __typename
+    collapseCompleted
+    completed
+    completedAt
+    date
+    endDate
+    id
+    link
+    name
+    noteBody
+    order
+    springEnabled
+    supportsNotes
+}

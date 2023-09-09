@@ -1,10 +1,10 @@
 #![allow(clippy::all, warnings)]
-pub struct Tasks;
-pub mod tasks {
+pub struct UnprioritizeTasks;
+pub mod unprioritize_tasks {
     #![allow(dead_code)]
     use std::result::Result;
-    pub const OPERATION_NAME: &str = "Tasks";
-    pub const QUERY : & str = "query Tasks($completed: Boolean, $date: Date, $due_date: Date, $focus: Boolean, $inbox: Boolean, $project_id: ID) {\n    tasks(completed: $completed, date: $date, dueDate: $due_date, focus: $focus, inbox: $inbox, projectId: $project_id) {\n        ...Task\n    }\n}\n\nfragment Task on Task {\n    __typename\n    completed\n    completedAt\n    date\n    description\n    dueDate\n    groupIds\n    id\n    isRecurring\n    link\n    name\n    priorityOrder\n    spring\n}" ;
+    pub const OPERATION_NAME: &str = "UnprioritizeTasks";
+    pub const QUERY : & str = "mutation UnprioritizeTasks($ids: [ID!]!) {\n    unprioritizeTasks(ids: $ids) {\n        ...Task\n    }\n}\n\nfragment Task on Task {\n    __typename\n    completed\n    completedAt\n    date\n    description\n    dueDate\n    groupIds\n    id\n    isRecurring\n    link\n    name\n    priorityOrder\n    spring\n}" ;
     use super::*;
     use serde::{Deserialize, Serialize};
     #[allow(dead_code)]
@@ -15,16 +15,11 @@ pub mod tasks {
     type Int = i64;
     #[allow(dead_code)]
     type ID = String;
-    type Date = crate::graphql::custom_scalars::Date;
     type DateTime = crate::graphql::custom_scalars::DateTime;
+    type Date = crate::graphql::custom_scalars::Date;
     #[derive(Serialize)]
     pub struct Variables {
-        pub completed: Option<Boolean>,
-        pub date: Option<Date>,
-        pub due_date: Option<Date>,
-        pub focus: Option<Boolean>,
-        pub inbox: Option<Boolean>,
-        pub project_id: Option<ID>,
+        pub ids: Vec<ID>,
     }
     impl Variables {}
     #[derive(Deserialize, Debug)]
@@ -49,18 +44,19 @@ pub mod tasks {
     }
     #[derive(Deserialize, Debug)]
     pub struct ResponseData {
-        pub tasks: Option<Vec<TasksTasks>>,
+        #[serde(rename = "unprioritizeTasks")]
+        pub unprioritize_tasks: Vec<UnprioritizeTasksUnprioritizeTasks>,
     }
-    pub type TasksTasks = Task;
+    pub type UnprioritizeTasksUnprioritizeTasks = Task;
 }
-impl graphql_client::GraphQLQuery for Tasks {
-    type Variables = tasks::Variables;
-    type ResponseData = tasks::ResponseData;
+impl graphql_client::GraphQLQuery for UnprioritizeTasks {
+    type Variables = unprioritize_tasks::Variables;
+    type ResponseData = unprioritize_tasks::ResponseData;
     fn build_query(variables: Self::Variables) -> ::graphql_client::QueryBody<Self::Variables> {
         graphql_client::QueryBody {
             variables,
-            query: tasks::QUERY,
-            operation_name: tasks::OPERATION_NAME,
+            query: unprioritize_tasks::QUERY,
+            operation_name: unprioritize_tasks::OPERATION_NAME,
         }
     }
 }

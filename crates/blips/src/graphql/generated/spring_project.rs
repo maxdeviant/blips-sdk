@@ -1,10 +1,10 @@
 #![allow(clippy::all, warnings)]
-pub struct Project;
-pub mod project {
+pub struct SpringProject;
+pub mod spring_project {
     #![allow(dead_code)]
     use std::result::Result;
-    pub const OPERATION_NAME: &str = "Project";
-    pub const QUERY : & str = "query Project($project_id: ID!) {\n    project(projectId: $project_id) {\n        ...Project\n    }\n}\n\nfragment Project on Project {\n    __typename\n    collapseCompleted\n    completed\n    completedAt\n    date\n    endDate\n    id\n    link\n    name\n    noteBody\n    order\n    springEnabled\n    supportsNotes\n}" ;
+    pub const OPERATION_NAME: &str = "SpringProject";
+    pub const QUERY : & str = "mutation SpringProject($project_id: ID!) {\n    springProject(projectId: $project_id) {\n        ...Project\n    }\n}\n\nfragment Project on Project {\n    __typename\n    collapseCompleted\n    completed\n    completedAt\n    date\n    endDate\n    id\n    link\n    name\n    noteBody\n    order\n    springEnabled\n    supportsNotes\n}" ;
     use super::*;
     use serde::{Deserialize, Serialize};
     #[allow(dead_code)]
@@ -45,18 +45,19 @@ pub mod project {
     }
     #[derive(Deserialize, Debug)]
     pub struct ResponseData {
-        pub project: Option<ProjectProject>,
+        #[serde(rename = "springProject")]
+        pub spring_project: SpringProjectSpringProject,
     }
-    pub type ProjectProject = Project;
+    pub type SpringProjectSpringProject = Project;
 }
-impl graphql_client::GraphQLQuery for Project {
-    type Variables = project::Variables;
-    type ResponseData = project::ResponseData;
+impl graphql_client::GraphQLQuery for SpringProject {
+    type Variables = spring_project::Variables;
+    type ResponseData = spring_project::ResponseData;
     fn build_query(variables: Self::Variables) -> ::graphql_client::QueryBody<Self::Variables> {
         graphql_client::QueryBody {
             variables,
-            query: project::QUERY,
-            operation_name: project::OPERATION_NAME,
+            query: spring_project::QUERY,
+            operation_name: spring_project::OPERATION_NAME,
         }
     }
 }
