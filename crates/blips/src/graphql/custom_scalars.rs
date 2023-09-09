@@ -1,3 +1,3 @@
 pub type Date = String;
 
-pub type DateTime = String;
+pub type DateTime = u64;
