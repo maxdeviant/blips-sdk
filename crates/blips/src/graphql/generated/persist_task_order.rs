@@ -15,8 +15,8 @@ pub mod persist_task_order {
     type Int = i64;
     #[allow(dead_code)]
     type ID = String;
-    type DateTime = crate::graphql::custom_scalars::DateTime;
     type Date = crate::graphql::custom_scalars::Date;
+    type DateTime = crate::graphql::custom_scalars::DateTime;
     #[derive(Serialize)]
     pub struct OrderInput {
         pub id: Option<ID>,
