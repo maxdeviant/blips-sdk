@@ -1,6 +1,13 @@
 [package]
 name = "blips"
 version = "0.1.0"
+description = "A client for interacting with the Blips API."
+repository = "https://github.com/maxdeviant/blips-sdk"
+documentation = "https://docs.rs/blips/"
+categories = ["api-bindings"]
+keywords = ["blips", "api", "client", "sdk"]
+authors = ["Marshall Bowers <elliott.codes@gmail.com>"]
+license = "MIT"
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html

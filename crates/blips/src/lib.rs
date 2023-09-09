@@ -1,3 +1,5 @@
+#![doc = include_str!("../README.md")]
+
 mod client;
 mod client_generated;
 mod core;
