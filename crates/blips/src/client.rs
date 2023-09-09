@@ -70,7 +70,7 @@ impl<'a> BlipsClientBuilder<'a> {
     /// Returns a new [`BlipsClientBuilder`] using the provided session token.
     pub fn new(session_token: &'a SessionToken, csrf_token: &'a CsrfToken) -> Self {
         Self {
-            base_url: Url::parse("https://api.blips.app/query").unwrap(),
+            base_url: Url::parse("https://blips.app/query").unwrap(),
             session_token,
             csrf_token,
         }
