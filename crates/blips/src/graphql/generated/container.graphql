@@ -1,0 +1,10 @@
+query Container($date: Date, $inbox: Boolean, $project_id: ID) {
+    container(date: $date, inbox: $inbox, projectId: $project_id) {
+        ...Container
+    }
+}
+
+fragment Container on Container {
+    __typename
+    
+}

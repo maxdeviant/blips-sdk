@@ -1,0 +1,16 @@
+query Note($note_id: ID!) {
+    note(noteId: $note_id) {
+        ...Note
+    }
+}
+
+fragment Note on Note {
+    __typename
+    body
+    date
+    endDate
+    hidePreview
+    id
+    name
+    updatedAt
+}

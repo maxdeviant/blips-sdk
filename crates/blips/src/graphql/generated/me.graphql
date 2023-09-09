@@ -1,0 +1,12 @@
+query Me {
+    me {
+        ...User
+    }
+}
+
+fragment User on User {
+    __typename
+    email
+    id
+    isMfaEnabled
+}

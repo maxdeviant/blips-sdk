@@ -1,0 +1,21 @@
+query Tasks($completed: Boolean, $date: Date, $due_date: Date, $focus: Boolean, $inbox: Boolean, $project_id: ID) {
+    tasks(completed: $completed, date: $date, dueDate: $due_date, focus: $focus, inbox: $inbox, projectId: $project_id) {
+        ...Task
+    }
+}
+
+fragment Task on Task {
+    __typename
+    completed
+    completedAt
+    date
+    description
+    dueDate
+    groupIds
+    id
+    isRecurring
+    link
+    name
+    priorityOrder
+    spring
+}

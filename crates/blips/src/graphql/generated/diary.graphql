@@ -1,0 +1,14 @@
+query Diary($date: Date!) {
+    diary(date: $date) {
+        ...Diary
+    }
+}
+
+fragment Diary on Diary {
+    __typename
+    collapseCompleted
+    date
+    id
+    noteBody
+    supportsNotes
+}

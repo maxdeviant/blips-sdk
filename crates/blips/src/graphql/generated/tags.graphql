@@ -1,0 +1,12 @@
+query Tags {
+    tags {
+        ...Tag
+    }
+}
+
+fragment Tag on Tag {
+    __typename
+    id
+    name
+    slug
+}

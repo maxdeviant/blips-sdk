@@ -1,0 +1,21 @@
+query Projects($date: Date, $limit: Int, $query: String, $board_id: ID) {
+    projects(date: $date, limit: $limit, query: $query, boardId: $board_id) {
+        ...Project
+    }
+}
+
+fragment Project on Project {
+    __typename
+    collapseCompleted
+    completed
+    completedAt
+    date
+    endDate
+    id
+    link
+    name
+    noteBody
+    order
+    springEnabled
+    supportsNotes
+}

@@ -1,0 +1,16 @@
+query Board($board_id: ID) {
+    board(boardId: $board_id) {
+        ...Board
+    }
+}
+
+fragment Board on Board {
+    __typename
+    archivedAt
+    emoji
+    id
+    lastViewedAt
+    name
+    projectCompletedProjectColumnId
+    taskCompletedProjectColumnId
+}

@@ -254,7 +254,7 @@ mod generated;
     generated_client_file.write_all(
         format!(
             r#"
-impl crate::LinearClient {{
+impl crate::BlipsClient {{
     {impls}
 }}
             "#,

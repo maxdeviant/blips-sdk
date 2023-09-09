@@ -1,0 +1,16 @@
+query Notes($date: Date, $project_id: ID, $query: String) {
+    notes(date: $date, projectId: $project_id, query: $query) {
+        ...Note
+    }
+}
+
+fragment Note on Note {
+    __typename
+    body
+    date
+    endDate
+    hidePreview
+    id
+    name
+    updatedAt
+}

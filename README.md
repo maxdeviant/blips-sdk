@@ -15,5 +15,5 @@ graphql-client introspect-schema \
 ### Run GraphQL Codegen
 
 ```sh
-graphql-client generate --schema-path=schema.json --custom-scalars-module='crate::graphql::custom_scalars' --response-derives='Debug' --output-directory crates/blips/src/graphql/generated/ crates/blips/src/graphql/
+graphql-client generate --schema-path=schema.json --custom-scalars-module='crate::graphql::custom_scalars' --response-derives='Debug' --output-directory crates/blips/src/graphql/generated/ crates/blips/src/graphql/foo.graphql
 ```

@@ -1,0 +1,12 @@
+query CurrentUser {
+    currentUser {
+        ...User
+    }
+}
+
+fragment User on User {
+    __typename
+    email
+    id
+    isMfaEnabled
+}
