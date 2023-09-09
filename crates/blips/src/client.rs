@@ -1,36 +1,36 @@
 use graphql_client::GraphQLQuery;
 use url::{ParseError, Url};
 
-use crate::{CsrfToken, SessionToken};
+use crate::{CsrfToken, SessionCookie};
 
 /// The Blips client.
 pub struct BlipsClient {
     base_url: Url,
-    session_token: SessionToken,
+    session_cookie: SessionCookie,
     csrf_token: CsrfToken,
     client: reqwest::Client,
 }
 
 impl BlipsClient {
     /// Returns a new instance of the Blips client using the provided session token.
-    pub fn new(session_token: &SessionToken, csrf_token: &CsrfToken) -> Self {
-        BlipsClientBuilder::new(session_token, csrf_token).build()
+    pub fn new(session_cookie: &SessionCookie, csrf_token: &CsrfToken) -> Self {
+        BlipsClientBuilder::new(session_cookie, csrf_token).build()
     }
 
     /// Returns a [`BlipsClientBuilder`] that may be used to construct a Blips client.
     pub fn builder<'a>(
-        session_token: &'a SessionToken,
+        session_cookie: &'a SessionCookie,
         csrf_token: &'a CsrfToken,
     ) -> BlipsClientBuilder<'a> {
-        BlipsClientBuilder::new(session_token, csrf_token)
+        BlipsClientBuilder::new(session_cookie, csrf_token)
     }
 
     pub(crate) fn base_url(&self) -> &Url {
         &self.base_url
     }
 
-    pub(crate) fn session_token(&self) -> &SessionToken {
-        &self.session_token
+    pub(crate) fn session_cookie(&self) -> &SessionCookie {
+        &self.session_cookie
     }
 
     pub(crate) fn csrf_token(&self) -> &CsrfToken {
@@ -46,10 +46,7 @@ impl BlipsClient {
         let response = self
             .client
             .post(self.base_url().clone())
-            .header(
-                "Cookie",
-                format!("Cookie: user_session={}", self.session_token()),
-            )
+            .header("Cookie", self.session_cookie().to_string())
             .header("X-Csrf-Token", self.csrf_token().to_string())
             .json(&body)
             .send()
@@ -62,16 +59,16 @@ impl BlipsClient {
 /// A builder for a Blips client.
 pub struct BlipsClientBuilder<'a> {
     base_url: Url,
-    session_token: &'a SessionToken,
+    session_cookie: &'a SessionCookie,
     csrf_token: &'a CsrfToken,
 }
 
 impl<'a> BlipsClientBuilder<'a> {
     /// Returns a new [`BlipsClientBuilder`] using the provided session token.
-    pub fn new(session_token: &'a SessionToken, csrf_token: &'a CsrfToken) -> Self {
+    pub fn new(session_cookie: &'a SessionCookie, csrf_token: &'a CsrfToken) -> Self {
         Self {
             base_url: Url::parse("https://blips.app/query").unwrap(),
-            session_token,
+            session_cookie,
             csrf_token,
         }
     }
@@ -83,8 +80,8 @@ impl<'a> BlipsClientBuilder<'a> {
     }
 
     /// Sets the session token that the client will use.
-    pub fn session_token(mut self, session_token: &'a SessionToken) -> Self {
-        self.session_token = session_token;
+    pub fn session_cookie(mut self, session_cookie: &'a SessionCookie) -> Self {
+        self.session_cookie = session_cookie;
         self
     }
 
@@ -103,7 +100,7 @@ impl<'a> BlipsClientBuilder<'a> {
 
         BlipsClient {
             base_url: self.base_url,
-            session_token: self.session_token.to_owned(),
+            session_cookie: self.session_cookie.to_owned(),
             csrf_token: self.csrf_token.to_owned(),
             client,
         }

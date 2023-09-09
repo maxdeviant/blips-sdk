@@ -1,22 +1,22 @@
 use std::fmt::Display;
 
-/// A Blips session token.
+/// A Blips session cookie.
 #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
-pub struct SessionToken(String);
+pub struct SessionCookie(String);
 
-impl Display for SessionToken {
+impl Display for SessionCookie {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!(f, "{}", self.0)
     }
 }
 
-impl From<String> for SessionToken {
+impl From<String> for SessionCookie {
     fn from(value: String) -> Self {
         Self(value)
     }
 }
 
-impl From<&str> for SessionToken {
+impl From<&str> for SessionCookie {
     fn from(value: &str) -> Self {
         Self(value.to_string())
     }
