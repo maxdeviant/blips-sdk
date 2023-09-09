@@ -48,7 +48,7 @@ impl BlipsClient {
             .post(self.base_url().clone())
             .header(
                 "Cookie",
-                format!("Cookie: user_session={}", self.session_token),
+                format!("Cookie: user_session={}", self.session_token()),
             )
             .header("X-Csrf-Token", self.csrf_token().to_string())
             .json(&body)
